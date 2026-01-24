@@ -211,21 +211,6 @@ torch, torchvision, Pillow, numpy, scikit-learn, matplotlib, seaborn, gdown
 
 Install with: pip install -r requirements.txt
 
-### Download Test Dataset
-
-Test dataset folder is hosted on Google Drive:
-Download Lung CT Test Images
-
-After download, place the folder in the root directory:
-
-Lung_CT_test_images/
-    ├── non_cancerous/
-    └── cancerous/
-
-
-test.py will automatically download this folder if it’s not already present.
-
-
 ### Run Testing
 
 The test.py script will automatically download the pre-trained model and test dataset if not already present:
@@ -240,7 +225,6 @@ python test.py
 git clone https://github.com/egwaojeangel/lung_cancer_detection_using_resnet50_on_CT_scans.git
 
 ---
-
 
 ## Disclaimer
 This system is intended **strictly for research and educational purposes**.
@@ -262,6 +246,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
