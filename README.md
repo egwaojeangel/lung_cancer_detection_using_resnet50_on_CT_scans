@@ -189,7 +189,33 @@ Selecting the “View” option on any record navigates to the View Record Page.
 #### Printable Patient Result
 If the user opts to print the analysis result directly after a scan, they are navigated to the Print Preview Page. This page shows the scan image alongside the result in a formatted layout prepared for hard copy documentation. A print button is included to trigger the browser’s print functionality.
 
+
+### Requirements
+
+All required Python packages are listed in requirements.txt:
+
+torch, torchvision, Pillow, numpy, scikit-learn, matplotlib, seaborn, gdown
+
+Install with: pip install -r requirements.txt
+
+
+### Run Testing
+
+The test.py script will automatically download the pre-trained model and test dataset if not already present:
+
+python test.py
+
+
+### Installation & Setup
+
+#### Clone the repository:
+
+git clone https://github.com/egwaojeangel/lung_cancer_detection_using_resnet50_on_CT_scans.git
+cd lung_cancer_detection_using_resnet50_on_CT_scans
+
+
 ---
+
 
 ## Disclaimer
 This system is intended **strictly for research and educational purposes**.
@@ -211,6 +237,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
