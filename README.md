@@ -80,6 +80,20 @@ After balancing, a total of **1,720 CT scan images** were used:
 - ReLU activation
 - Early stopping based on validation performance
 
+  ---
+
+  ## Trained Model and File Size Limitation
+The trained ResNet50 model weights are not included in this repository due to
+GitHub file size limitations. The saved model file exceeds the maximum upload
+size allowed on GitHub.
+
+This repository provides the complete implementation of the model architecture,
+training pipeline, preprocessing steps, and evaluation methodology. The trained
+model can be reproduced by running the provided training scripts using the
+datasets described in this project.
+
+This approach follows standard research and academic practice.
+
 ---
 
 ## Results
