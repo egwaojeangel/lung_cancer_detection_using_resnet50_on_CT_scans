@@ -120,7 +120,7 @@ All images are preprocessed to meet ResNet50 input requirements, while data augm
 ### Landing Page 
 ![Landing Page](Screenshots%20Of%20Results%20and%20System%20Deployment/landing_page.png)
 
-#### Landing Page (Authentication & Access Control)
+#### Landing Page (Authentication & Access Control):
 The application begins at the Landing Page (Sign In/Register). This serves as the access gate for licensed healthcare professionals. Users are required to enter their hospital name, admin ID, email, and password to register or log in. The interface also features a password strength analyzer, ensuring that only strong and secure credentials are accepted during registration. Successful login or registration transitions the user to the Terms and Conditions page.
 
 ### Terms and Conditions Page
@@ -166,6 +166,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
