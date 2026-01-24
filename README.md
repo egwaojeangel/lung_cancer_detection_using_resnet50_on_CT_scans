@@ -82,7 +82,7 @@ After balancing, a total of **1,720 CT scan images** were used:
 
   ---
 
-  ## Trained Model and File Size Limitation
+## Trained Model and File Size Limitation
 The trained ResNet50 model weights are not included in this repository due to
 GitHub file size limitations. The saved model file exceeds the maximum upload
 size allowed on GitHub.
