@@ -123,14 +123,27 @@ All images are preprocessed to meet ResNet50 input requirements, while data augm
 #### Landing Page (Authentication & Access Control):
 The application begins at the Landing Page (Sign In/Register). This serves as the access gate for licensed healthcare professionals. Users are required to enter their hospital name, admin ID, email, and password to register or log in. The interface also features a password strength analyzer, ensuring that only strong and secure credentials are accepted during registration. Successful login or registration transitions the user to the Terms and Conditions page.
 
+
 ### Terms and Conditions Page
 ![Terms and Conditions](Screenshots%20Of%20Results%20and%20System%20Deployment/terms_and_conditions_page.png)
+
+#### Terms of Use and Liability Disclaimer
+The Terms and Conditions Page presents the legal and ethical disclaimers associated with using the 
+system. It reminds users that the tool is intended as a support system and should not replace professional medical judgment. This page also displays the system’s contact information. Users must accept the terms before they can proceed further into the application.
+
 
 ### Post-Login Dashboard
 ![Post Login Page](Screenshots%20Of%20Results%20and%20System%20Deployment/post_login_page.png)
 
+#### Post-Login Dashboard
+Upon accepting the terms, the user is navigated to the Post-Login Page. This page acts as a central dashboard, offering three main options: upload a new scan for analysis, access patient records, or log out. The interface also displays a personalized welcome message based on the logged-in user’s credentials.
+
+
 ### Upload & Analysis Result
 ![Analysis Result](Screenshots%20Of%20Results%20and%20System%20Deployment/Analysis_result.png)
+
+
+
 
 ### Add Patient Records
 ![Add Records](Screenshots%20Of%20Results%20and%20System%20Deployment/Add_Records_page.png)
@@ -166,6 +179,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
