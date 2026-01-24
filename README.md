@@ -89,45 +89,44 @@ The model achieved strong performance on unseen test data:
 - **Recall:** 99.21%
 - **Precision:** 97.69%
 - **F1-score:** 98.45%
-
 ### Confusion Matrix
-![Confusion Matrix](Screenshots Of Results and System Deployment/confusion_matrix.png)
+![Confusion Matrix](Screenshots%20Of%20Results%20and%20System%20Deployment/confusion_matrix.png)
 
 ### Test Results
-![Test Results](Screenshots Of Results and System Deployment/test_results.png)
+![Test Results](Screenshots%20Of%20Results%20and%20System%20Deployment/test_results.png)
 
 ---
 
 ## System Architecture
-![System Architecture](Screenshots Of Results and System Deployment/System_Archictecture_ Of_ The_Lung_Cancer_Detection_System.png)
+![System Architecture](Screenshots%20Of%20Results%20and%20System%20Deployment/System_Archictecture_%20Of_%20The_Lung_Cancer_Detection_System.png)
 
 ---
 
 ## Web Application Deployment (LUNNY)
 
 ### Landing Page
-![Landing Page](Screenshots Of Results and System Deployment/landing_page.png)
+![Landing Page](Screenshots%20Of%20Results%20and%20System%20Deployment/landing_page.png)
 
 ### Terms and Conditions Page
-![Terms and Conditions](Screenshots Of Results and System Deployment/terms_and_conditions_page.png)
+![Terms and Conditions](Screenshots%20Of%20Results%20and%20System%20Deployment/terms_and_conditions_page.png)
 
 ### Post-Login Dashboard
-![Post Login Page](Screenshots Of Results and System Deployment/post_login_page.png)
+![Post Login Page](Screenshots%20Of%20Results%20and%20System%20Deployment/post_login_page.png)
 
 ### Upload & Analysis Result
-![Analysis Result](Screenshots Of Results and System Deployment/Analysis_result.png)
+![Analysis Result](Screenshots%20Of%20Results%20and%20System%20Deployment/Analysis_result.png)
 
 ### Add Patient Records
-![Add Records](Screenshots Of Results and System Deployment/Add_Records_page.png)
+![Add Records](Screenshots%20Of%20Results%20and%20System%20Deployment/Add_Records_page.png)
 
 ### Patient Records Table
-![Patient Records](Screenshots Of Results and System Deployment/patients_record_page.png)
+![Patient Records](Screenshots%20Of%20Results%20and%20System%20Deployment/patients_record_page.png)
 
 ### View Patient Record
-![View Patient Record](Screenshots Of Results and System Deployment/view_patient_record.png)
+![View Patient Record](Screenshots%20Of%20Results%20and%20System%20Deployment/view_patient_record.png)
 
 ### Printable Patient Result
-![Print Patient Result](Screenshots Of Results and System Deployment/print_patient_result.png)
+![Print Patient Result](Screenshots%20Of%20Results%20and%20System%20Deployment/print_patient_result.png)
 
 ---
 
@@ -151,3 +150,4 @@ qualified healthcare professionals.
 - Integration of explainable AI (XAI)
 - Multi-view and 3D CT scan analysis
 - Clinical validation and deployment
+
