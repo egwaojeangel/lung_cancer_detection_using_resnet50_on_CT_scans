@@ -33,6 +33,7 @@ After downloading, place the folder in the root of the repository like this:
 Lung_CT_test_images/
     ├── non_cancerous/
     └── cancerous/
+    
 ✅ Note: The test.py script will automatically download this dataset folder if it is not already present.
 
 #### Run Testing
@@ -247,6 +248,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
