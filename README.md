@@ -23,16 +23,22 @@ detection.
 
 ---
 
-## Dataset
-CT scan images were collected from three publicly available datasets:
+### Dataset
+CT scan images were obtained from three publicly available lung imaging datasets to ensure diversity in imaging characteristics and improve the generalizability of the proposed model.
 
-- IQ-OTH/NCCD
-- LIDC-IDRI
-- BIR Lung Dataset
+- **IQ-OTH/NCCD Lung Cancer Dataset**  
+  (Iraq-Oncology Teaching Hospital / National Center for Cancer Diseases)  
+  977 CT images including normal, benign, and malignant lung cases.
 
-After balancing, a total of **1,720 CT scan images** were used:
-- 860 cancerous
-- 860 non-cancerous
+- **BIR Lung Dataset**  
+  (Biomedical Imaging Research Lung Dataset)  
+  476 CT images acquired at the Barnard Institute of Radiology, Madras Medical College, Chennai, India.
+
+- **LIDC-IDRI Dataset**  
+  (Lung Image Database Consortium and Image Database Resource Initiative)  
+  327 selected CT images with expert radiologist annotations.
+
+A total of **1,782 CT images** were collected (922 cancerous and 860 non-cancerous). After balancing(undersampling cancerous CT scans), **1,720 images** were used, consisting of 860 cancerous and 860 non-cancerous cases.
 
 ### Data Split
 - Training: 70%
@@ -150,5 +156,6 @@ qualified healthcare professionals.
 - Integration of explainable AI (XAI)
 - Multi-view and 3D CT scan analysis
 - Clinical validation 
+
 
 
