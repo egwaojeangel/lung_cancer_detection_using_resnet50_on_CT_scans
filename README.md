@@ -15,15 +15,22 @@ professionals in medical image analysis.
 ## Download Test Dataset
 The test dataset is hosted on Google Drive.
 👉 Download the Test Images here:
-https://drive.google.com/drive/folders/1Gy0fecxzm7d3i_0ibT6XGf5Db_5cW7kV?usp=drive_link
+https://drive.google.com/drive/folders/1Gy0fecxzm7d3i_0ibT6XGf5Db_5cW7kV?usp=drive_link 
 
 After downloading, place the folder in the root of the repository like this:
 
 Lung_CT_test_images/
     ├── non_cancerous/
     └── cancerous/
-
 ✅ Note: The test.py script will automatically download this dataset folder if it is not already present.
+
+## Results
+The model achieved strong performance on unseen test data:
+
+- **Accuracy:** 98.46%
+- **Recall:** 99.21%
+- **Precision:** 97.69%
+- **F1-score:** 98.45%
 
 ---
 
@@ -102,14 +109,6 @@ A total of **1,782 CT images** were collected (922 cancerous and 860 non-cancero
 - Early stopping based on validation performance
 
 ---
-
-## Results
-The model achieved strong performance on unseen test data:
-
-- **Accuracy:** 98.46%
-- **Recall:** 99.21%
-- **Precision:** 97.69%
-- **F1-score:** 98.45%
   
 ### Confusion Matrix
 ![Confusion Matrix](Screenshots%20Of%20Results%20and%20System%20Deployment/confusion_matrix.png)
@@ -246,6 +245,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
