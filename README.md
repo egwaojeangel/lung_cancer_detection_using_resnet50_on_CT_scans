@@ -213,6 +213,7 @@ python test.py
 git clone https://github.com/egwaojeangel/lung_cancer_detection_using_resnet50_on_CT_scans.git
 
 
+
 ---
 
 
@@ -236,6 +237,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
