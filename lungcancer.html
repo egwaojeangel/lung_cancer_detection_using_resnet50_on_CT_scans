@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUNNY - Lung Cancer Detection</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #1a1a1a;
+            color: #f0f0f0;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            width: 100%;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            position: relative;
+        }
+
+        .page.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .page.inactive {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        h1, h2, h3 {
+            color: #80cbc4;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #patient-records h2 {
+            font-size: 36px;
+        }
+
+        #terms-content h3 {
+            text-align: left;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        #terms-content p {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            background: linear-gradient(to right, #004d40, #00796b);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #00796b, #004d40);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+
+        #landing-page {
+            background: url('https://placehold.co/1920x1080?text=Lung+Background') center/cover no-repeat;
+            position: relative;
+        }
+
+        #landing-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        #landing-page > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-container {
+            background: #333;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        #terms-page, #post-login-page, #scan-page, #records-page, #view-record {
+            background: #333;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 1000px;
+            text-align: center;
+        }
+
+        #patient-records, #print-preview {
+            background: #333;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 1400px;
+            text-align: center;
+        }
+
+        #print-preview {
+            background: white;
+            color: #000;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid #555;
+            border-radius: 5px;
+            font-size: 14px;
+            background: #444;
+            color: #f0f0f0;
+        }
+
+        .password-strength {
+            height: 8px;
+            background: #555;
+            border-radius: 5px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+
+        .password-strength div {
+            height: 100%;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+
+        #auth-message {
+            margin: 8px 0;
+        }
+
+        .success-message {
+            color: #28a745;
+        }
+
+        .error-message {
+            color: #d9534f;
+        }
+
+        .terms-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .scan-container {
+            background: #333;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        .file-label {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #00796b;
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .file-label:hover {
+            background: #004d40;
+        }
+
+        #file-name {
+            font-size: 16px;
+            color: #80cbc4;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+
+        .loader-text {
+            display: none;
+            font-size: 16px;
+            color: #80cbc4;
+            margin: 20px 0;
+        }
+
+        .loader-dots::after {
+            content: '';
+            animation: dots 1.5s infinite;
+        }
+
+        @keyframes dots {
+            0% { content: ''; }
+            25% { content: '.'; }
+            50% { content: '..'; }
+            75% { content: '...'; }
+            100% { content: ''; }
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #444;
+            border-radius: 10px;
+            display: none;
+        }
+
+        #result p:first-child span.detection-positive {
+            color: red;
+        }
+
+        #result p:first-child span.detection-negative {
+            color: green;
+        }
+
+        .disclaimer {
+            font-weight: bold;
+            margin-top: 10px;
+            color: #d9534f;
+            text-align: justify;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: #555;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #777;
+        }
+
+        .advice-container {
+            margin-top: 20px;
+            text-align: center;
+            min-height: 60px;
+            position: relative;
+        }
+
+        .advice-quote, .advice-citation {
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 1s ease, transform 1s ease;
+            position: absolute;
+            width: 100%;
+            font-style: italic;
+        }
+
+        .advice-quote.visible, .advice-citation.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .advice-quote {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #f0f0f0;
+        }
+
+        .advice-citation {
+            font-size: 14px;
+            color: #bbb;
+            margin-top: 20px;
+        }
+
+        #scan-page h2 {
+            font-size: 28px;
+        }
+
+        #scan-page p.upload-instruction {
+            font-size: 16px;
+        }
+
+        #scan-page .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 10px 15px;
+        }
+
+        #post-login-page h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+
+        #post-login-page p {
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+
+        #post-login-page .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 20px;
+        }
+
+        #records-page input, #records-page textarea, #patient-records input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background: #444;
+            color: #f0f0f0;
+        }
+
+        #records-page label, #patient-records label {
+            display: block;
+            margin-top: 10px;
+            color: #80cbc4;
+        }
+
+        .record-form {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .record-search {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .record-search input {
+            width: 60%;
+            max-width: 600px;
+        }
+
+        .detection-positive {
+            color: red;
+            font-weight: bold;
+        }
+
+        .detection-negative {
+            color: green;
+            font-weight: bold;
+        }
+
+        .upload-instruction {
+            font-size: 14px;
+            color: white;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .login-container {
+                padding: 15px;
+                max-width: 100%;
+            }
+            #terms-page, #post-login-page, #scan-page, #records-page, #patient-records, #view-record, #print-preview {
+                padding: 20px;
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .btn {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+
+            .back-btn {
+                top: 10px;
+                left: 10px;
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+
+            .terms-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .record-search input {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            #scan-page h2 {
+                font-size: 24px;
+            }
+
+            #scan-page p.upload-instruction {
+                font-size: 14px;
+            }
+
+            #scan-page .btn, .file-label {
+                padding: 12px 24px;
+                font-size: 16px;
+            }
+
+            #post-login-page h1 {
+                font-size: 26px;
+            }
+
+            #post-login-page p {
+                font-size: 16px;
+            }
+
+            #post-login-page .btn {
+                padding: 12px 24px;
+                font-size: 16px;
+                margin: 15px;
+            }
+
+            #patient-records h2 {
+                font-size: 28px;
+            }
+        }
+
+        #passport-input {
+            display: none;
+        }
+
+        .passport-label {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #00796b;
+            color: white;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-size: 12px;
+        }
+
+        .passport-label:hover {
+            background: #004d40;
+        }
+
+        #passport-name {
+            font-size: 12px;
+            color: #80cbc4;
+            margin: 5px 0;
+        }
+
+        #passport-preview {
+            max-width: 100px;
+            max-height: 100px;
+            margin: 5px auto;
+            display: none;
+        }
+
+        .delete-passport {
+            display: inline-block;
+            padding: 8px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 15px;
+            vertical-align: middle;
+        }
+
+        .delete-passport:hover {
+            background: darkred;
+        }
+
+        .patient-record {
+            background: #f5f5f0;
+            border: 2px solid #d4c4a8;
+            border-radius: 10px;
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+            color: #000;
+            font-size: 14px;
+        }
+
+        .patient-record img {
+            width: 100px;
+            height: 100px;
+            border-radius: 5px;
+            float: left;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+
+        .patient-record h2 {
+            color: #000;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .patient-record .section {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f0e7d8;
+            border-radius: 5px;
+        }
+
+        .patient-record .section h3 {
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        .patient-record .view-btn {
+            background: #d4c4a8;
+            color: #000;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .patient-record .view-btn:hover {
+            background: #c0b098;
+        }
+
+        .table-container {
+            width: 100%;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .patient-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .patient-table th, .patient-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #555;
+        }
+
+        .patient-table th {
+            background: #444;
+            color: #80cbc4;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .patient-table tr {
+            height: 40px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .patient-table tr:hover {
+            background: #444;
+        }
+
+        .patient-table td input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .patient-table .expand-icon {
+            float: right;
+        }
+
+        .highlight {
+            font-weight: bold;
+        }
+
+        #print-preview img {
+            max-width: 500px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        #print-preview .result-preview {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            #print-preview {
+                box-shadow: none;
+                padding: 0;
+            }
+            .back-btn, #print-preview .btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sign In Page -->
+    <div id="landing-page" class="page active">
+        <div class="login-container">
+            <h1>Welcome to LUNNY!</h1>
+            <p>An AI-Powered Lung Cancer Detection System</p>
+            <p>By: Egwaoje Angel Omoikhefe</p>
+            <p>Matric no: 21/sci01/025</p>
+            <p>Supervised by: Dr. Oguntimilehin A.</p>
+            <input type="text" id="hospital-name" placeholder="Hospital/Clinic Name" required>
+            <input type="text" id="admin-id" placeholder="Admin ID" required>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <input type="password" id="password" placeholder="Enter your password" oninput="checkPasswordStrength()" required>
+            <div class="password-strength"><div id="strength-bar"></div></div>
+            <p id="strength-text"></p>
+            <p id="auth-message"></p>
+            <button class="btn" id="register-btn" disabled>Register</button>
+            <button class="btn" id="signin-btn">Sign In</button>
+        </div>
+    </div>
+
+    <!-- Terms and Conditions Page -->
+    <div id="terms-page" class="page">
+        <button class="back-btn" onclick="navigateBack()">Back to Sign In</button>
+        <h2>Terms and Conditions</h2>
+        <div id="terms-content">
+            <p><strong>LUNNY Terms of Use</strong></p>
+            <p>Last Updated: May 5, 2025</p>
+            <p>Welcome to LUNNY, an AI-powered lung cancer detection platform. By using our service, you agree to the following terms and conditions. Please read them carefully.</p>
+            <h3>1. Acceptance of Terms</h3>
+            <p>By accessing or using LUNNY, you agree to be bound by these Terms of Use and our Privacy Policy. If you do not agree, please do not use our service.</p>
+            <h3>2. Use of Service</h3>
+            <p>LUNNY provides AI-based analysis of lung CT scans for informational purposes only. The results are not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider.</p>
+            <h3>3. User Responsibilities</h3>
+            <p>You are responsible for ensuring that any uploaded medical images (PNG, JPG, JPEG, DCM) comply with applicable laws and regulations, including patient consent and data privacy laws (e.g., HIPAA, GDPR).</p>
+            <h3>4. Intellectual Property</h3>
+            <p>All content, including the AI model, 3D visualizations, and software, is the property of LUNNY or its licensors. You are not allowed to reproduce, distribute, or modify any content without permission.</p>
+            <h3>5. Limitation of Liability</h3>
+            <p>LUNNY is not liable for any damages arising from the use of our service, including inaccurate results or reliance on AI analysis. The service is provided "as is" without warranties.</p>
+            <h3>6. Termination</h3>
+            <p>We reserve the right to terminate or suspend your access to LUNNY at any time for violation of these terms or for any other reason.</p>
+            <h3>7. Contact Us</h3>
+            <p>If you have any questions, please contact us at support@lunny.ai.</p>
+        </div>
+        <div class="terms-buttons">
+            <button class="btn" onclick="navigate('post-login-page')">Accept</button>
+            <button class="btn" onclick="navigateBack()">Decline</button>
+        </div>
+    </div>
+
+    <!-- Post-Login Page -->
+    <div id="post-login-page" class="page">
+        <button class="back-btn" onclick="navigateBack()">Back</button>
+        <h1 id="welcome-message"></h1>
+        <p>What would you like to do today?</p>
+        <button class="btn" onclick="navigate('scan-page')">Upload New Scan</button>
+        <button class="btn" onclick="navigate('patient-records')">Access Patient Records</button>
+        <button class="btn" onclick="confirmLogout()">Logout</button>
+    </div>
+
+    <!-- Scan Page -->
+    <div id="scan-page" class="page">
+        <button class="back-btn" onclick="navigateBack()">Back</button>
+        <div class="scan-container">
+            <h2>Upload a Lung CT Scan</h2>
+            <p class="upload-instruction">Upload a Lung CT scan in PNG, JPG, JPEG, or DICOM format for image analysis to identify potential indicators of cancer.</p>
+            <input type="file" id="file-input" accept="image/png, image/jpeg, image/jpg, .dcm">
+            <label for="file-input" class="file-label">Upload CT Scan</label>
+            <p id="file-name"></p>
+            <button class="btn" onclick="analyzeScan()">Analyze Scan</button>
+            <p class="loader-text loader-dots" id="loader">Analyzing</p>
+            <div id="result"></div>
+            <div id="button-container">
+                <button class="btn" id="save-as-btn" onclick="saveAsRecord()">Save As</button>
+                <button class="btn" id="print-result-btn" onclick="printResult()">Print Result</button>
+                <button class="btn" id="share-result-btn" onclick="shareResult()">Share Result</button>
+                <button class="btn" id="delete-btn" onclick="confirmDeleteScan()">Delete</button>
+            </div>
+            <div class="advice-container">
+                <p class="advice-quote"></p>
+                <p class="advice-citation"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Print Preview Page -->
+    <div id="print-preview" class="page">
+        <button class="back-btn" onclick="navigateBack()">Back</button>
+        <h2>Print Preview</h2>
+        <img id="preview-image" src="" alt="CT Scan Image">
+        <div class="result-preview" id="preview-result"></div>
+        <button class="btn" onclick="printDocument()">Print</button>
+    </div>
+
+    <!-- Records Page -->
+    <div id="records-page" class="page">
+        <button class="back-btn" onclick="navigateBack()">Back</button>
+        <div class="record-form">
+            <h3 id="record-form-title">Add Patient Record</h3>
+            <input type="file" id="passport-input" accept="image/png, image/jpeg, image/jpg">
+            <label for="passport-input" class="passport-label">Upload Patient Passport</label>
+            <button class="delete-passport" onclick="deletePassport()">🗑️</button>
+            <p id="passport-name"></p>
+            <img id="passport-preview" alt="Passport Preview">
+            <div style="overflow: hidden;">
+                <div style="display: inline-block; vertical-align: top;">
+                    <h3>Patient Identification and Demographics</h3>
+                    <label for="patient-id">Patient ID</label>
+                    <input type="text" id="patient-id" placeholder="e.g., LUNNY-203948It">
+                    <label for="full-name">Full Name</label>
+                    <input type="text" id="full-name" placeholder="e.g., Jane Doe">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob">
+                    <label for="gender">Gender</label>
+                    <select id="gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <label for="contact-info">Contact Information</label>
+                    <input type="text" id="contact-info" placeholder="e.g., +1234567890">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" placeholder="e.g., 123 Main St">
+                    <label for="emergency-contact">Emergency Contact</label>
+                    <input type="text" id="emergency-contact" placeholder="e.g., John Doe, +1234567890">
+                    <label for="insurance-info">Insurance Information</label>
+                    <input type="text" id="insurance-info" placeholder="e.g., Policy #12345">
+                    <label for="doctor-in-charge">Assigned Doctor</label>
+                    <input type="text" id="doctor-in-charge" placeholder="e.g., Dr. Lisa Paymond">
+                </div>
+            </div>
+            <div class="section">
+                <h3>Medical History</h3>
+                <label for="smoking-history">Smoking History</label>
+                <input type="text" id="smoking-history" placeholder="e.g., Former smoker, 25 pack-years">
+                <label for="occupational-exposure">Occupational Exposure</label>
+                <input type="text" id="occupational-exposure" placeholder="e.g., Asbestos, Radon">
+                <label for="family-history">Family History</label>
+                <input type="text" id="family-history" placeholder="e.g., Mother with lung cancer">
+                <label for="previous-conditions">Previous Conditions</label>
+                <input type="text" id="previous-conditions" placeholder="e.g., COPD, Asthma">
+                <label for="current-medications">Current Medications</label>
+                <input type="text" id="current-medications" placeholder="e.g., Amlodipine, Salbutamol">
+                <label for="allergies">Allergies</label>
+                <input type="text" id="allergies" placeholder="e.g., Penicillin, Peanuts">
+                <label for="past-surgeries">Past Surgeries</label>
+                <input type="text" id="past-surgeries" placeholder="e.g., Lobectomy, 2020">
+            </div>
+            <div class="section">
+                <h3>Imaging and AI Results</h3>
+                <label for="scan-date">Scan Date</label>
+                <input type="date" id="scan-date">
+                <label for="scan-type">Scan Type</label>
+                <input type="text" id="scan-type" placeholder="e.g., Low-dose CT">
+                <label for="nodule-type">Nodule Type</label>
+                <input type="text" id="nodule-type" placeholder="e.g., Solid">
+                <label for="ai-model-output">AI Model Output</label>
+                <input type="text" id="ai-model-output" placeholder="e.g., Probability of malignancy 87%">
+                <label for="radiologist-notes">Radiologist's Notes</label>
+                <textarea id="radiologist-notes" placeholder="e.g., Nodule observed in right lobe"></textarea>
+            </div>
+            <div class="section">
+                <h3>Laboratory and Biopsy</h3>
+                <label for="biopsy-result">Biopsy Result</label>
+                <input type="text" id="biopsy-result" placeholder="e.g., Positive for NSCLC">
+                <label for="histology">Histology</label>
+                <input type="text" id="histology" placeholder="e.g., Adenocarcinoma">
+            </div>
+            <div class="section">
+                <h3>Treatment Plan</h3>
+                <label for="diagnosis-date">Diagnosis Date</label>
+                <input type="date" id="diagnosis-date">
+                <label for="treatment-type">Treatment Type</label>
+                <input type="text" id="treatment-type" placeholder="e.g., Surgery, Radiation, Chemotherapy, Immunotherapy">
+                <label for="treatment-start-date">Treatment Start Date</label>
+                <input type="date" id="treatment-start-date">
+                <label for="response-to-treatment">Response to Treatment</label>
+                <input type="text" id="response-to-treatment" placeholder="e.g., Progression, Regression, Stable">
+                <label for="follow-up-scans">Follow-up Scan Dates and Results</label>
+                <textarea id="follow-up-scans" placeholder="e.g., 2025-01-15: Stable, 2025-04-10: Regression"></textarea>
+                <label for="next-appointment">Next Appointment</label>
+                <input type="date" id="next-appointment">
+                <label for="survivorship-care">Survivorship Care</label>
+                <textarea id="survivorship-care" placeholder="e.g., Enrolled in palliative care program"></textarea>
+            </div>
+            <div class="section">
+                <h3>Administrative and Legal</h3>
+                <label for="consent-forms">Consent Forms</label>
+                <input type="text" id="consent-forms" placeholder="e.g., Biopsy, AI Analysis, Treatment">
+                <label for="referrals">Referrals</label>
+                <input type="text" id="referrals" placeholder="e.g., Referred to oncologist Dr. Smith">
+                <label for="medical-notes">Medical Notes</label>
+                <textarea id="medical-notes" placeholder="e.g., Patient shows good response to treatment"></textarea>
+            </div>
+            <button class="btn" id="save-record-btn" onclick="saveRecord()">Save Record</button>
+        </div>
+    </div>
+
+    <!-- Patient Records Page -->
+    <div id="patient-records" class="page">
+        <button class="back-btn" onclick="navigateBack()">Back</button>
+        <h2>Patient Records</h2>
+        <div class="record-search">
+            <input type="text" id="search-patient" placeholder="Search by Name or Patient ID" oninput="filterPatients()">
+            <button class="btn" id="add-btn" onclick="addRecord()">Add Record</button>
+            <button class="btn" id="edit-btn" disabled>Edit Record</button>
+            <button class="btn" id="view-btn" disabled>View Record</button>
+        </div>
+        <div class="table-container">
+            <table class="patient-table">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;"></th>
+                        <th style="width: 20%;">Patient ID</th>
+                        <th style="width: 25%;">Patient Name</th>
+                        <th style="width: 20%;">DOB</th>
+                        <th style="width: 20%;">Contact Information</th>
+                        <th style="width: 10%;"></th>
+                    </tr>
+                </thead>
+                <tbody id="patient-folders"></tbody>
+            </table>
+        </div>
+        <p id="no-record-message" style="display: none; color: #d9534f;">Patient record not found in the records. Ensure the information is correct or create a new record if needed.</p>
+    </div>
+
+    <!-- View Record Page -->
+    <div id="view-record" class="page">
+        <button class="back-btn" onclick="navigateBack()">Back</button>
+        <div class="patient-record" id="view-record-content"></div>
+    </div>
+
+    <script>
+        // Initialize variables
+        let records = [];
+        let userEmail = '';
+        let isEditMode = false;
+        let currentScanImage = null;
+        let navigationHistory = ['landing-page'];
+        let selectedPatientId = null;
+        let quoteInterval = null;
+        let currentQuote = 0;
+        let currentResult = '';
+
+        // Quotes array
+        const quotes = [
+            { quote: "Smoking causes about 85% of lung cancer cases.", citation: "Doll, R., & Hill, A. B., 1950" },
+            { quote: "Early screening can reduce lung cancer mortality by 20%.", citation: "National Lung Screening Trial Research Team, 2011" },
+            // ... (you can keep the full array or shorten it)
+        ];
+
+        function checkPasswordStrength() {
+            const password = document.getElementById('password');
+            const strengthBar = document.getElementById('strength-bar');
+            const strengthText = document.getElementById('strength-text');
+            const registerBtn = document.getElementById('register-btn');
+
+            if (!password || !strengthBar || !strengthText || !registerBtn) return;
+
+            const passwordValue = password.value;
+            let strength = 0;
+            let feedback = [];
+
+            if (passwordValue.length < 8) feedback.push("at least 8 characters"); else strength += 25;
+            if (!/[A-Z]/.test(passwordValue)) feedback.push("at least 1 uppercase letter"); else strength += 25;
+            if (!/[a-z]/.test(passwordValue)) feedback.push("at least 1 lowercase letter"); else strength += 25;
+            if (!/[0-9]/.test(passwordValue)) feedback.push("at least 1 number"); else strength += 15;
+            if (!/[^A-Za-z0-9]/.test(passwordValue)) feedback.push("at least 1 special character"); else strength += 10;
+
+            strength = Math.min(100, strength);
+            strengthBar.style.width = strength + '%';
+
+            if (strength < 30) {
+                strengthBar.style.background = 'red';
+                strengthText.textContent = feedback.length ? `Password must include: ${feedback.join(", ")}` : 'Weak';
+            } else if (strength < 60) {
+                strengthBar.style.background = 'yellow';
+                strengthText.textContent = feedback.length ? `Password must include: ${feedback.join(", ")}` : 'Moderate';
+            } else if (strength < 90) {
+                strengthBar.style.background = 'green';
+                strengthText.textContent = feedback.length ? `Password must include: ${feedback.join(", ")}` : 'Strong';
+            } else {
+                strengthBar.style.background = 'darkgreen';
+                strengthText.textContent = 'Very Strong';
+                strengthBar.style.width = '100%';
+            }
+
+            registerBtn.disabled = feedback.length > 0;
+        }
+
+        async function handleAuth(type) {
+            console.log(`handleAuth called with type: ${type}`);
+            const hospitalName = document.getElementById('hospital-name');
+            const adminId = document.getElementById('admin-id');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const authMessage = document.getElementById('auth-message');
+
+            if (!hospitalName || !adminId || !emailInput || !passwordInput || !authMessage) {
+                authMessage.textContent = 'Form setup error. Please contact support.';
+                authMessage.className = 'error-message';
+                return;
+            }
+
+            const hospitalNameValue = hospitalName.value.trim();
+            const adminIdValue = adminId.value.trim();
+            const emailValue = emailInput.value.trim();
+            const passwordValue = passwordInput.value.trim();
+
+            if (!emailValue || !passwordValue || (type === 'register' && (!hospitalNameValue || !adminIdValue))) {
+                authMessage.textContent = 'Please fill in all required fields.';
+                authMessage.className = 'error-message';
+                return;
+            }
+
+            try {
+                const endpoint = type === 'register' ? '/register' : '/login';
+                const payload = {
+                    email: emailValue,
+                    password: passwordValue
+                };
+                if (type === 'register') {
+                    payload.hospitalName = hospitalNameValue;
+                    payload.adminId = adminIdValue;
+                }
+
+                const response = await fetch(`http://localhost:5000${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) throw new Error(data.error || 'Operation failed');
+
+                userEmail = emailValue;
+                authMessage.textContent = type === 'register' ? 'Registration Successful!' : 'Sign In Successful!';
+                authMessage.className = 'success-message';
+
+                resetLandingPage();
+                setTimeout(() => navigate('terms-page'), 1000);
+            } catch (error) {
+                authMessage.textContent = error.message;
+                authMessage.className = 'error-message';
+                console.error(error);
+            }
+        }
+
+        function resetLandingPage() {
+            ['hospital-name', 'admin-id', 'email', 'password', 'strength-text', 'auth-message'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = el.tagName === 'P' ? '' : el.textContent = '';
+            });
+            document.getElementById('strength-bar').style.width = '0%';
+            document.getElementById('strength-bar').style.background = 'red';
+            document.getElementById('register-btn').disabled = true;
+        }
+
+        function setWelcomeMessage() {
+            const welcome = document.getElementById('welcome-message');
+            if (welcome && userEmail) {
+                const name = userEmail.split('@')[0];
+                welcome.textContent = `Good day, Dr. ${name.charAt(0).toUpperCase() + name.slice(1)}!`;
+            }
+        }
+
+        function navigate(pageId) {
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.remove('active');
+                p.classList.add('inactive');
+            });
+            const target = document.getElementById(pageId);
+            if (target) {
+                target.classList.remove('inactive');
+                target.classList.add('active');
+                if (pageId === 'post-login-page') setWelcomeMessage();
+                if (pageId === 'patient-records') loadPatientFolders();
+                if (pageId === 'scan-page') resetScanPage();
+            }
+        }
+
+        function navigateBack() {
+            history.back();
+        }
+
+        function confirmLogout() {
+            if (confirm('Are you sure you want to log out?')) {
+                userEmail = '';
+                navigate('landing-page');
+            }
+        }
+
+        async function analyzeScan() {
+            const fileInput = document.getElementById('file-input');
+            const fileNameDisplay = document.getElementById('file-name');
+            const loader = document.getElementById('loader');
+            const resultDiv = document.getElementById('result');
+            const buttons = document.getElementById('button-container');
+
+            if (!fileInput.files?.length) {
+                alert("Please select an image first.");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            fileNameDisplay.textContent = file.name;
+
+            loader.style.display = 'block';
+            resultDiv.style.display = 'none';
+            buttons.style.display = 'none';
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('http://localhost:5000/detect', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    throw new Error(err.error || 'Server error');
+                }
+
+                const data = await response.json();
+
+                currentResult = `
+                    <strong>Result:</strong> ${data.result} 
+                    <br><strong>Confidence:</strong> ${data.confidence}
+                    <br><strong>Details:</strong> Lung-RADS: ${data.details?.lung_rads || 'N/A'}, 
+                    Nodule Type: ${data.details?.nodule_type || 'N/A'}
+                `;
+
+                resultDiv.innerHTML = `
+                    <p>${currentResult}</p>
+                    <p class="disclaimer">This is an AI-based screening tool. Final diagnosis must be made by a qualified radiologist.</p>
+                `;
+                resultDiv.style.display = 'block';
+                buttons.style.display = 'flex';
+
+            } catch (err) {
+                resultDiv.innerHTML = `<p class="error-message">Error: ${err.message}</p>`;
+                resultDiv.style.display = 'block';
+                console.error(err);
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+
+        function resetScanPage() {
+            document.getElementById('file-input').value = '';
+            document.getElementById('file-name').textContent = '';
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('button-container').style.display = 'none';
+            document.getElementById('loader').style.display = 'none';
+        }
+
+        // Placeholder for other functions you had (add your logic here)
+        function saveAsRecord() { alert("Save as record - to be implemented"); }
+        function printResult() { window.print(); }
+        function shareResult() { alert("Share functionality - to be implemented"); }
+        function confirmDeleteScan() { if (confirm("Delete this scan?")) resetScanPage(); }
+        function deletePassport() { /* clear passport preview */ }
+
+        function saveRecord() { alert("Save patient record - to be implemented"); }
+        function loadPatientFolders() { /* populate table */ }
+        function addRecord() { navigate('records-page'); }
+        function editRecord() { alert("Edit record - to be implemented"); }
+        function viewRecord() { alert("View record - to be implemented"); }
+
+        // Event listeners
+        document.getElementById('register-btn').addEventListener('click', () => handleAuth('register'));
+        document.getElementById('signin-btn').addEventListener('click', () => handleAuth('signin'));
+
+        // Initial page
+        navigate('landing-page');
+    </script>
+</body>
+</html>
