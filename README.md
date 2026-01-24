@@ -155,9 +155,10 @@ qualified healthcare professionals.
 
 ## Future Work
 - Expansion of dataset size
-- Integration of explainable AI (XAI)
-- Multi-view and 3D CT scan analysis
-- Clinical validation 
+- Add explainability methods (e.g., Grad‑CAM)
+- Extend to 3D or multi‑view CNNs for better spatial understanding
+- Clinical validation with expert radiologists
+
 
 
 
