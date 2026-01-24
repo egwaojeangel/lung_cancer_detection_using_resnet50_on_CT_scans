@@ -97,11 +97,21 @@ The model achieved strong performance on unseen test data:
 - **Recall:** 99.21%
 - **Precision:** 97.69%
 - **F1-score:** 98.45%
+  
 ### Confusion Matrix
 ![Confusion Matrix](Screenshots%20Of%20Results%20and%20System%20Deployment/confusion_matrix.png)
 
+#### Confusion Matrix
+The confusion matrix output further illustrates the model’s accuracy. Out of the 130 non-cancerous images, 129 were correctly classified as non-cancerous, while only 1 was misclassified. Similarly, 127 out of 130 cancerous images were accurately predicted, with 3 instances misclassified as non-cancerous. These results confirm the model’s reliability and its ability to distinguish between cancerous and non-cancerous lung tissues with high precision.
+
+
 ### Test Results
 ![Test Results](Screenshots%20Of%20Results%20and%20System%20Deployment/test_results.png)
+
+
+#### Test Results
+After training, the model was tested on 260 images, comprising 130 cancerous and 130 non-cancerous samples. The results demonstrated the high performance of the system. The accuracy of the model was measured at 98.46%, indicating that it made correct detections in nearly all test instances. The model achieved a precision (specificity) of 0.9922, meaning that 99.22% of non-cancerous images were correctly identified, with minimal false positives. The sensitivity (recall) score was 0.9769, signifying that 97.69% of cancerous cases were correctly detected by the system. The F1 score, which balances precision and recall, was calculated to be 0.9845, reflecting strong and reliable classification performance across both classes.
+
 
 ---
 
@@ -127,7 +137,7 @@ The application begins at the Landing Page (Sign In/Register). This serves as th
 ### Terms and Conditions Page
 ![Terms and Conditions](Screenshots%20Of%20Results%20and%20System%20Deployment/terms_and_conditions_page.png)
 
-#### Terms of Use and Liability Disclaimer
+#### Terms of Use and Liability Disclaimer:
 The Terms and Conditions Page presents the legal and ethical disclaimers associated with using the 
 system. It reminds users that the tool is intended as a support system and should not replace professional medical judgment. This page also displays the system’s contact information. Users must accept the terms before they can proceed further into the application.
 
@@ -135,27 +145,50 @@ system. It reminds users that the tool is intended as a support system and shoul
 ### Post-Login Dashboard
 ![Post Login Page](Screenshots%20Of%20Results%20and%20System%20Deployment/post_login_page.png)
 
-#### Post-Login Dashboard
+#### Post-Login Dashboard:
 Upon accepting the terms, the user is navigated to the Post-Login Page. This page acts as a central dashboard, offering three main options: upload a new scan for analysis, access patient records, or log out. The interface also displays a personalized welcome message based on the logged-in user’s credentials.
 
 
-### Upload & Analysis Result
+### Upload Scan Interface
+![Upload Scan](Screenshots%20Of%20Results%20and%20System%20Deployment/upload_scan_page.png)
+
+#### Upload Scan Interface:
+There is a file input system for uploading CT scan images and it displays motivational health quotes to keep the interface engaging. After a user uploads an image and clicks the “Analyze” button, the system begins processing the image using the integrated ResNet50 model. A loader animation appears during this time to indicate progress.
+
+
+### Analysis Result Interface
 ![Analysis Result](Screenshots%20Of%20Results%20and%20System%20Deployment/Analysis_result.png)
 
-
+#### Analysis Result Interface:
+Once analysis is complete, the result is displayed in a dedicated Result Section. The result consists of a binary classification: either “Positive” or “Negative” and the Lung-RADS score, along with a confidence score indicating the model’s certainty. The result and a medical disclaimer appear within the same container to ensure users clearly understand that the tool supports, but does not replace, formal diagnosis.
 
 
 ### Add Patient Records
 ![Add Records](Screenshots%20Of%20Results%20and%20System%20Deployment/Add_Records_page.png)
 
+#### Add Patient Records:
+After viewing the result, users have the option to Save, Print, Share, or Delete the scan result. Clicking “Save As” redirects the user to the Records Page, where a form allows them to input full patient data including demographics, scan result, passport photo, and medical history. Saving this form adds the entry to the records database.
+
+
 ### Patient Records Table
 ![Patient Records](Screenshots%20Of%20Results%20and%20System%20Deployment/patients_record_page.png)
+
+#### Patient Records Table
+Saved records are then made accessible via the Patient Records Page. This page displays all saved patient data in a searchable, interactive table. Users can add new records, edit existing ones, delete records, or view them in detail. Each record entry supports selection through checkboxes and expandable rows.
+
 
 ### View Patient Record
 ![View Patient Record](Screenshots%20Of%20Results%20and%20System%20Deployment/view_patient_record.png)
 
+#### View Patient Record
+Selecting the “View” option on any record navigates to the View Record Page. This interface presents a detailed read-only view of the selected patient's data, scan result, medical notes, and other saved information in a clean, printable layout.
+
+
 ### Printable Patient Result
 ![Print Patient Result](Screenshots%20Of%20Results%20and%20System%20Deployment/print_patient_result.png)
+
+#### Printable Patient Result
+If the user opts to print the analysis result directly after a scan, they are navigated to the Print Preview Page. This page shows the scan image alongside the result in a formatted layout prepared for hard copy documentation. A print button is included to trigger the browser’s print functionality.
 
 ---
 
@@ -179,6 +212,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
