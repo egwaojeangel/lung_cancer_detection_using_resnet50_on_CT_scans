@@ -149,5 +149,6 @@ qualified healthcare professionals.
 - Expansion of dataset size
 - Integration of explainable AI (XAI)
 - Multi-view and 3D CT scan analysis
-- Clinical validation and deployment
+- Clinical validation 
+
 
