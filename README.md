@@ -108,7 +108,7 @@ The model achieved strong performance on unseen test data:
 ## System Architecture
 ![System Architecture](Screenshots%20Of%20Results%20and%20System%20Deployment/System_Archictecture_%20Of_%20The_Lung_Cancer_Detection_System.png)
 
-System Architecture Overview
+## System Architecture Overview
 
 The proposed lung cancer detection system follows an end-to-end deep learning pipeline. Lung CT images are collected from multiple datasets, balanced to ensure equal cancerous and non-cancerous samples, and split into training (70%), validation (15%), and testing (15%) sets using stratified sampling.
 
@@ -164,6 +164,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
