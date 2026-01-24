@@ -32,6 +32,19 @@ The model achieved strong performance on unseen test data:
 - **Precision:** 97.69%
 - **F1-score:** 98.45%
 
+### Run Testing
+
+The test.py script will automatically download the pre-trained model and test dataset if not already present:
+
+python test.py
+
+---
+### Installation & Setup
+
+#### Clone the repository:
+
+git clone https://github.com/egwaojeangel/lung_cancer_detection_using_resnet50_on_CT_scans.git
+
 ---
 
 ## Motivation
@@ -210,19 +223,6 @@ torch, torchvision, Pillow, numpy, scikit-learn, matplotlib, seaborn, gdown
 
 Install with: pip install -r requirements.txt
 
-### Run Testing
-
-The test.py script will automatically download the pre-trained model and test dataset if not already present:
-
-python test.py
-
-
-### Installation & Setup
-
-#### Clone the repository:
-
-git clone https://github.com/egwaojeangel/lung_cancer_detection_using_resnet50_on_CT_scans.git
-
 ---
 
 ## Disclaimer
@@ -245,6 +245,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
