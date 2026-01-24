@@ -12,6 +12,14 @@ The trained model was integrated into a web-based application named **LUNNY**,
 designed to support early lung cancer detection and assist healthcare
 professionals in medical image analysis.
 
+
+## Quick Start
+
+**Clone this repository:**
+```bash
+git clone https://github.com/egwaojeangel/lung_cancer_detection_using_resnet50_on_CT_scans.git
+cd lung_cancer_detection_using_resnet50_on_CT_scans
+
 ---
 
 ## Motivation
@@ -237,6 +245,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
