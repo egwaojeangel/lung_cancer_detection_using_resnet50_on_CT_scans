@@ -12,7 +12,18 @@ The trained model was integrated into a web-based application named **LUNNY**,
 designed to support early lung cancer detection and assist healthcare
 professionals in medical image analysis.
 
-## Download Test Dataset
+## Results
+The model achieved strong performance on unseen test data:
+
+- **Accuracy:** 98.46%
+- **Recall:** 99.21%
+- **Precision:** 97.69%
+- **F1-score:** 98.45%
+
+---
+
+### Quick Start
+#### Download Test Dataset
 The test dataset is hosted on Google Drive.
 👉 Download the Test Images here:
 https://drive.google.com/drive/folders/1Gy0fecxzm7d3i_0ibT6XGf5Db_5cW7kV?usp=drive_link 
@@ -24,16 +35,7 @@ Lung_CT_test_images/
     └── cancerous/
 ✅ Note: The test.py script will automatically download this dataset folder if it is not already present.
 
-## Results
-The model achieved strong performance on unseen test data:
-
-- **Accuracy:** 98.46%
-- **Recall:** 99.21%
-- **Precision:** 97.69%
-- **F1-score:** 98.45%
-
-### Run Testing
-
+#### Run Testing
 The test.py script will automatically download the pre-trained model and test dataset if not already present:
 
 python test.py
@@ -245,6 +247,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
