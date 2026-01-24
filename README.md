@@ -1,3 +1,5 @@
+**Core stack:** Python (PyTorch, Flask) · Deep Learning · Medical Imaging
+
 # Lung Cancer Detection System Using ResNet50 on CT Scans 🫁
 
 ## Overview
@@ -156,6 +158,7 @@ qualified healthcare professionals.
 - Integration of explainable AI (XAI)
 - Multi-view and 3D CT scan analysis
 - Clinical validation 
+
 
 
 
