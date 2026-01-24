@@ -12,13 +12,18 @@ The trained model was integrated into a web-based application named **LUNNY**,
 designed to support early lung cancer detection and assist healthcare
 professionals in medical image analysis.
 
+## Download Test Dataset
+The test dataset is hosted on Google Drive.
+👉 Download the Test Images here:
+https://drive.google.com/drive/folders/1Gy0fecxzm7d3i_0ibT6XGf5Db_5cW7kV?usp=drive_link
 
-## Quick Start
+After downloading, place the folder in the root of the repository like this:
 
-**Clone this repository:**
-```bash
-git clone https://github.com/egwaojeangel/lung_cancer_detection_using_resnet50_on_CT_scans.git
-cd lung_cancer_detection_using_resnet50_on_CT_scans
+Lung_CT_test_images/
+    ├── non_cancerous/
+    └── cancerous/
+
+✅ Note: The test.py script will automatically download this dataset folder if it is not already present.
 
 ---
 
@@ -206,6 +211,20 @@ torch, torchvision, Pillow, numpy, scikit-learn, matplotlib, seaborn, gdown
 
 Install with: pip install -r requirements.txt
 
+### Download Test Dataset
+
+Test dataset folder is hosted on Google Drive:
+Download Lung CT Test Images
+
+After download, place the folder in the root directory:
+
+Lung_CT_test_images/
+    ├── non_cancerous/
+    └── cancerous/
+
+
+test.py will automatically download this folder if it’s not already present.
+
 
 ### Run Testing
 
@@ -219,8 +238,6 @@ python test.py
 #### Clone the repository:
 
 git clone https://github.com/egwaojeangel/lung_cancer_detection_using_resnet50_on_CT_scans.git
-
-
 
 ---
 
@@ -245,6 +262,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
