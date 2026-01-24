@@ -101,13 +101,12 @@ The model achieved strong performance on unseen test data:
 ### Confusion Matrix
 ![Confusion Matrix](Screenshots%20Of%20Results%20and%20System%20Deployment/confusion_matrix.png)
 
-#### Confusion Matrix
+#### Confusion Matrix:
 The confusion matrix output further illustrates the model’s accuracy. Out of the 130 non-cancerous images, 129 were correctly classified as non-cancerous, while only 1 was misclassified. Similarly, 127 out of 130 cancerous images were accurately predicted, with 3 instances misclassified as non-cancerous. These results confirm the model’s reliability and its ability to distinguish between cancerous and non-cancerous lung tissues with high precision.
 
 
 ### Test Results
 ![Test Results](Screenshots%20Of%20Results%20and%20System%20Deployment/test_results.png)
-
 
 #### Test Results
 After training, the model was tested on 260 images, comprising 130 cancerous and 130 non-cancerous samples. The results demonstrated the high performance of the system. The accuracy of the model was measured at 98.46%, indicating that it made correct detections in nearly all test instances. The model achieved a precision (specificity) of 0.9922, meaning that 99.22% of non-cancerous images were correctly identified, with minimal false positives. The sensitivity (recall) score was 0.9769, signifying that 97.69% of cancerous cases were correctly detected by the system. The F1 score, which balances precision and recall, was calculated to be 0.9845, reflecting strong and reliable classification performance across both classes.
@@ -212,6 +211,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
