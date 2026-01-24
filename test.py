@@ -1,7 +1,6 @@
 # test.py
 
 import os
-import urllib.request
 import torch
 import torch.nn as nn
 from torchvision import models, transforms
@@ -12,20 +11,41 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # ===========================
-# 1) MODEL DOWNLOAD SETUP
+# 0) Install gdown if missing
+# ===========================
+try:
+    import gdown
+except ImportError:
+    import subprocess
+    subprocess.check_call(["pip", "install", "gdown"])
+    import gdown
+
+# ===========================
+# 1) DOWNLOAD MODEL AUTOMATICALLY
 # ===========================
 
 model_path = "./resnet50_lung_cancer_binary.pth"
 model_url = "https://drive.google.com/uc?export=download&id=1Vc8dM9IsCOhLWreL0JSWNdi4L3TjrHBf"
 
-# Download automatically if model does not exist
 if not os.path.exists(model_path):
-    print("Model file not found. Downloading now ...")
-    urllib.request.urlretrieve(model_url, model_path)
-    print("Download complete!")
+    print("Downloading model...")
+    gdown.download(model_url, model_path, quiet=False)
+    print("Model download complete!")
 
 # ===========================
-# 2) DATASET CLASS
+# 2) DOWNLOAD TEST DATASET AUTOMATICALLY
+# ===========================
+
+test_folder = "./Lung_CT_test_images"
+test_folder_drive_link = "https://drive.google.com/drive/folders/1Gy0fecxzm7d3i_0ibT6XGf5Db_5cW7kV?usp=drive_link"
+
+if not os.path.exists(test_folder):
+    print("Downloading test dataset folder...")
+    gdown.download_folder(test_folder_drive_link, output=test_folder, quiet=False, use_cookies=False)
+    print("Test dataset download complete!")
+
+# ===========================
+# 3) DATASET CLASS
 # ===========================
 
 class_folders = {'non_cancerous': 0, 'cancerous': 1}
@@ -58,7 +78,7 @@ class LungCancerDataset(Dataset):
         return image, label
 
 # ===========================
-# 3) TEST DATA TRANSFORMS
+# 4) TEST DATA TRANSFORMS
 # ===========================
 
 val_test_transform = transforms.Compose([
@@ -71,17 +91,16 @@ val_test_transform = transforms.Compose([
 ])
 
 # ===========================
-# 4) LOAD TEST DATASET
+# 5) LOAD TEST DATASET
 # ===========================
 
-test_path = r"./Lung_CT_test_images"  # Your folder with non_cancerous & cancerous
-test_dataset = LungCancerDataset(test_path, transform=val_test_transform)
+test_dataset = LungCancerDataset(test_folder, transform=val_test_transform)
 test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False)
 
 print(f"Found {len(test_dataset)} test images.")
 
 # ===========================
-# 5) LOAD MODEL
+# 6) LOAD MODEL
 # ===========================
 
 model = models.resnet50(weights=models.ResNet50_Weights.IMAGENET1K_V1)
@@ -95,7 +114,7 @@ model.load_state_dict(torch.load(model_path, map_location="cpu"))
 model.eval()
 
 # ===========================
-# 6) TESTING LOOP
+# 7) TESTING LOOP
 # ===========================
 
 all_preds = []
@@ -109,7 +128,7 @@ with torch.no_grad():
         all_labels.extend(labels.numpy())
 
 # ===========================
-# 7) METRICS
+# 8) METRICS
 # ===========================
 
 conf_matrix = confusion_matrix(all_labels, all_preds)
@@ -135,7 +154,7 @@ print("Confusion Matrix:")
 print(conf_matrix)
 
 # ===========================
-# 8) CONFUSION MATRIX PLOT
+# 9) CONFUSION MATRIX PLOT
 # ===========================
 
 plt.figure(figsize=(8,6))
@@ -146,3 +165,4 @@ plt.xlabel("Detected")
 plt.ylabel("True")
 plt.title("Confusion Matrix")
 plt.show()
+
