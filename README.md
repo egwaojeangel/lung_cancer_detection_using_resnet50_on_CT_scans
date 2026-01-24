@@ -108,6 +108,12 @@ The model achieved strong performance on unseen test data:
 ## System Architecture
 ![System Architecture](Screenshots%20Of%20Results%20and%20System%20Deployment/System_Archictecture_%20Of_%20The_Lung_Cancer_Detection_System.png)
 
+System Architecture Overview
+
+The proposed lung cancer detection system follows an end-to-end deep learning pipeline. Lung CT images are collected from multiple datasets, balanced to ensure equal cancerous and non-cancerous samples, and split into training (70%), validation (15%), and testing (15%) sets using stratified sampling.
+
+All images are preprocessed to meet ResNet50 input requirements, while data augmentation is applied only to the training set to improve generalization. A pre-trained ResNet50 model is fine-tuned using transfer learning for binary lung cancer classification and evaluated using standard performance metrics. The trained model is then deployed as a web-based application for real-time lung cancer detection, with the entire workflow fully documented for reproducibility.
+
 ---
 
 ## Web Application Deployment (LUNNY)
@@ -158,6 +164,7 @@ qualified healthcare professionals.
 - Add explainability methods (e.g., Grad‑CAM)
 - Extend to 3D or multi‑view CNNs for better spatial understanding
 - Clinical validation with expert radiologists
+
 
 
 
