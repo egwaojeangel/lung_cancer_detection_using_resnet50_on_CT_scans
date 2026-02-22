@@ -34,8 +34,8 @@ The model achieved strong performance on 260 unseen test images:
 | Metric | Score |
 |---|---|
 | Accuracy | **98.46%** |
-| Recall (Sensitivity) | **99.21%** |
-| Precision (Specificity) | **97.69%** |
+| Recall (Sensitivity) | **97.69%** |
+| Precision (Specificity) | **99.22%** |
 | F1 Score | **98.45%** |
 
 ![Test Results](Screenshots%20Of%20Results%20and%20System%20Deployment/test_results.png)
@@ -299,6 +299,7 @@ Machine Learning Engineer | Computer Vision & Medical Imaging
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/angel-egwaoje-416927280)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=flat-square&logo=github)](https://github.com/egwaojeangel)
+
 
 
 
