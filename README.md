@@ -1,100 +1,156 @@
-**Core stack:** Python (PyTorch, Flask) · Deep Learning · Medical Imaging
+# 🫁 Lung Cancer Detection Using ResNet50 on CT Scans
 
-# Lung Cancer Detection System Using ResNet50 on CT Scans 🫁
+![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square&logo=python)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c?style=flat-square&logo=pytorch)
+![Flask](https://img.shields.io/badge/Flask-3.x-black?style=flat-square&logo=flask)
+![Accuracy](https://img.shields.io/badge/Accuracy-98.46%25-brightgreen?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
 
-## Overview
-This project presents a deep learning–based lung cancer detection system
-developed using Computed Tomography (CT) scan images. The system utilizes
-a transfer learning approach based on the ResNet50 architecture to classify
-lung CT scans as either **cancerous** or **non-cancerous**.
+**Core Stack:** Python (PyTorch, Flask) · Transfer Learning · ResNet50 · Medical Imaging · CT Scans
 
-The trained model was integrated into a web-based application named **LUNNY**,
-designed to support early lung cancer detection and assist healthcare
-professionals in medical image analysis.
+A deep learning system for early lung cancer detection from CT scan images, achieving **98.46% accuracy** using a fine-tuned ResNet50 model. Deployed as a full web application — **LUNNY** — designed to assist healthcare professionals with real-time diagnostic support.
+
+---
+
+## 📋 Table of Contents
+- [Results](#results)
+- [How to Run](#how-to-run)
+- [Overview](#overview)
+- [Dataset](#dataset)
+- [Methodology](#methodology)
+- [Model Architecture](#model-architecture)
+- [Training Details](#training-details)
+- [Web Application — LUNNY](#web-application-deployment-lunny)
+- [Limitations](#limitations)
+- [Future Work](#future-work)
+- [Disclaimer](#disclaimer)
+
+---
 
 ## Results
-The model achieved strong performance on unseen test data:
 
-- **Accuracy:** 98.46%
-- **Recall:** 99.21%
-- **Precision:** 97.69%
-- **F1-score:** 98.45%
+The model achieved strong performance on 260 unseen test images:
 
----
+| Metric | Score |
+|---|---|
+| Accuracy | **98.46%** |
+| Recall (Sensitivity) | **99.21%** |
+| Precision (Specificity) | **97.69%** |
+| F1 Score | **98.45%** |
 
-### Quick Start
-#### Download Test Dataset
-The test dataset is hosted on Google Drive.
-👉 Download the Test Images here:
-https://drive.google.com/drive/folders/1Gy0fecxzm7d3i_0ibT6XGf5Db_5cW7kV?usp=drive_link 
+![Test Results](Screenshots%20Of%20Results%20and%20System%20Deployment/test_results.png)
 
-After downloading, place the folder in the root of the repository like this:
+### Confusion Matrix
 
-Lung_CT_test_images/
-    ├── non_cancerous/
-    └── cancerous/
-    
-✅ Note: The test.py script will automatically download this dataset folder if it is not already present.
+![Confusion Matrix](Screenshots%20Of%20Results%20and%20System%20Deployment/confusion_matrix.png)
 
-#### Run Testing
-The test.py script will automatically download the pre-trained model and test dataset if not already present:
-
-python test.py
+Out of 130 non-cancerous images, 129 were correctly classified (1 misclassified). Out of 130 cancerous images, 127 were correctly identified (3 misclassified). These results confirm strong and reliable classification performance across both classes.
 
 ---
-### Installation & Setup
 
-#### Clone the repository:
+## How to Run
 
+### Prerequisites
+- Python 3.10 or higher
+- Git
+
+### 1. Clone the repository
+
+```bash
 git clone https://github.com/egwaojeangel/lung_cancer_detection_using_resnet50_on_CT_scans.git
+cd lung_cancer_detection_using_resnet50_on_CT_scans
+```
+
+### 2. Create a virtual environment
+
+```bash
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
+
+# Mac/Linux
+source venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run the test script
+
+The test script will automatically download the pre-trained model and test dataset if not already present:
+
+```bash
+python test.py
+```
+
+### 5. Run the web application
+
+```bash
+python app.py
+```
+
+Then open your browser at: **http://127.0.0.1:5000**
+
+### Test Dataset
+
+The test dataset is available on Google Drive if you want to run it manually:
+
+👉 [Download Test Images](https://drive.google.com/drive/folders/1Gy0fecxzm7d3i_0ibT6XGf5Db_5cW7kV?usp=drive_link)
+
+After downloading, place the folder in the root of the repository:
+
+```
+lung_cancer_detection/
+├── Lung_CT_test_images/
+│   ├── cancerous/
+│   └── non_cancerous/
+├── app.py
+├── test.py
+└── ...
+```
 
 ---
 
-## Motivation
-Lung cancer remains the leading cause of cancer-related deaths worldwide,
-largely due to delayed diagnosis. Manual analysis of CT scans can be
-time-consuming and error-prone, especially under high clinical workloads.
+## Overview
 
-This project demonstrates how deep learning can be used to improve diagnostic
-accuracy, reduce delays, and support clinical decision-making in lung cancer
-detection.
+Lung cancer remains the leading cause of cancer-related deaths worldwide, largely due to delayed diagnosis. Manual analysis of CT scans is time-consuming and error-prone, especially under high clinical workloads.
+
+This project demonstrates how deep learning can be applied to improve diagnostic accuracy, reduce delays, and support clinical decision-making in lung cancer detection. The system uses a transfer learning approach based on ResNet50, fine-tuned for binary classification of CT scans as cancerous or non-cancerous.
 
 ---
 
-### Dataset
-CT scan images were obtained from three publicly available lung imaging datasets to ensure diversity in imaging characteristics and improve the generalizability of the proposed model.
+## Dataset
 
-- **IQ-OTH/NCCD Lung Cancer Dataset**  
-  (Iraq-Oncology Teaching Hospital / National Center for Cancer Diseases)  
-  977 CT images including normal, benign, and malignant lung cases.
+CT scan images were obtained from three publicly available lung imaging datasets:
 
-- **BIR Lung Dataset**  
-  (Biomedical Imaging Research Lung Dataset)  
-  476 CT images acquired at the Barnard Institute of Radiology, Madras Medical College, Chennai, India.
+| Dataset | Description | Images |
+|---|---|---|
+| IQ-OTH/NCCD | Iraq-Oncology Teaching Hospital / National Center for Cancer Diseases | 977 |
+| BIR Lung Dataset | Barnard Institute of Radiology, Madras Medical College, Chennai | 476 |
+| LIDC-IDRI | Lung Image Database Consortium with expert radiologist annotations | 327 |
 
-- **LIDC-IDRI Dataset**  
-  (Lung Image Database Consortium and Image Database Resource Initiative)  
-  327 selected CT images with expert radiologist annotations.
-
-A total of **1,782 CT images** were collected (922 cancerous and 860 non-cancerous). After balancing(undersampling cancerous CT scans), **1,720 images** were used, consisting of 860 cancerous and 860 non-cancerous cases.
+**Total: 1,782 CT images** (922 cancerous, 860 non-cancerous). After undersampling to balance classes, **1,720 images** were used — 860 per class.
 
 ### Data Split
 - Training: 70%
 - Validation: 15%
 - Testing: 15%
 
-> ⚠️ Due to size and privacy constraints, the datasets are not included in
-> this repository.
+> ⚠️ Due to size and privacy constraints, the full datasets are not included in this repository.
 
 ---
 
 ## Methodology
 
 ### Image Preprocessing
-- Images resized to **224 × 224 pixels**
+- Resized to **224 × 224 pixels** (ResNet50 input requirement)
 - Converted to RGB format
-- Normalization applied for stable training
-- Independent preprocessing for each dataset split
+- Normalization applied for training stability
+- Independent preprocessing applied per split to prevent data leakage
 
 ### Data Augmentation (Training Only)
 - Horizontal and vertical flipping
@@ -102,150 +158,147 @@ A total of **1,782 CT images** were collected (922 cancerous and 860 non-cancero
 - Random cropping
 - Color jittering
 
+Augmentations applied to training set only to improve generalization without contaminating validation or test sets.
+
 ---
 
 ## Model Architecture
-- Base Model: **ResNet50 (ImageNet pre-trained)**
-- Transfer learning approach
-- Early layers frozen
-- Final layers fine-tuned for binary classification
-- Dropout rate: 0.5
 
-**Output Classes**
-- Cancerous
-- Non-cancerous
+- **Base Model:** ResNet50 (ImageNet pre-trained)
+- **Approach:** Transfer learning with fine-tuning
+- **Early layers:** Frozen to preserve learned low-level features
+- **Final layers:** Fine-tuned for binary lung cancer classification
+- **Dropout rate:** 0.5 to reduce overfitting
+
+**Output Classes:** Cancerous / Non-cancerous
+
+### System Architecture
+
+![System Architecture](Screenshots%20Of%20Results%20and%20System%20Deployment/System_Archictecture_%20Of_%20The_Lung_Cancer_Detection_System.png)
+
+The pipeline covers data collection, balancing, preprocessing, augmentation, model training, evaluation, and deployment as a full web application.
 
 ---
 
 ## Training Details
-- Framework: PyTorch
-- Optimizer: Adam
-- Learning rate scheduling
-- ReLU activation
-- Early stopping based on validation performance
 
----
-  
-### Confusion Matrix
-![Confusion Matrix](Screenshots%20Of%20Results%20and%20System%20Deployment/confusion_matrix.png)
-
-#### Confusion Matrix:
-The confusion matrix output further illustrates the model’s accuracy. Out of the 130 non-cancerous images, 129 were correctly classified as non-cancerous, while only 1 was misclassified. Similarly, 127 out of 130 cancerous images were accurately predicted, with 3 instances misclassified as non-cancerous. These results confirm the model’s reliability and its ability to distinguish between cancerous and non-cancerous lung tissues with high precision.
-
-
-### Test Results
-![Test Results](Screenshots%20Of%20Results%20and%20System%20Deployment/test_results.png)
-
-#### Test Results:
-After training, the model was tested on 260 images, comprising 130 cancerous and 130 non-cancerous samples. The results demonstrated the high performance of the system. The accuracy of the model was measured at 98.46%, indicating that it made correct detections in nearly all test instances. The model achieved a precision (specificity) of 0.9922, meaning that 99.22% of non-cancerous images were correctly identified, with minimal false positives. The sensitivity (recall) score was 0.9769, signifying that 97.69% of cancerous cases were correctly detected by the system. The F1 score, which balances precision and recall, was calculated to be 0.9845, reflecting strong and reliable classification performance across both classes.
-
-
----
-
-## System Architecture
-![System Architecture](Screenshots%20Of%20Results%20and%20System%20Deployment/System_Archictecture_%20Of_%20The_Lung_Cancer_Detection_System.png)
-
-####  System Architecture Overview:
-The proposed lung cancer detection system follows an end-to-end deep learning pipeline. Lung CT images are collected from multiple datasets, balanced to ensure equal cancerous and non-cancerous samples, and split into training (70%), validation (15%), and testing (15%) sets using stratified sampling.
-
-All images are preprocessed to meet ResNet50 input requirements, while data augmentation is applied only to the training set to improve generalization. A pre-trained ResNet50 model is fine-tuned using transfer learning for binary lung cancer classification and evaluated using standard performance metrics. The trained model is then deployed as a web-based application for real-time lung cancer detection, with the entire workflow fully documented for reproducibility.
+| Parameter | Value |
+|---|---|
+| Framework | PyTorch |
+| Optimizer | Adam |
+| Activation | ReLU |
+| Learning Rate | Scheduled |
+| Early Stopping | Based on validation performance |
 
 ---
 
 ## Web Application Deployment (LUNNY)
 
-### Landing Page 
+LUNNY is a web-based interface designed for licensed healthcare professionals to upload CT scans and receive real-time diagnostic support.
+
+### Landing Page
 ![Landing Page](Screenshots%20Of%20Results%20and%20System%20Deployment/landing_page.png)
 
-#### Landing Page (Authentication & Access Control):
-The application begins at the Landing Page (Sign In/Register). This serves as the access gate for licensed healthcare professionals. Users are required to enter their hospital name, admin ID, email, and password to register or log in. The interface also features a password strength analyzer, ensuring that only strong and secure credentials are accepted during registration. Successful login or registration transitions the user to the Terms and Conditions page.
+Access gate for healthcare professionals. Requires hospital name, admin ID, email, and password to register or log in. Includes a password strength analyser during registration.
 
-
-### Terms and Conditions Page
+### Terms and Conditions
 ![Terms and Conditions](Screenshots%20Of%20Results%20and%20System%20Deployment/terms_and_conditions_page.png)
 
-#### Terms of Use and Liability Disclaimer:
-The Terms and Conditions Page presents the legal and ethical disclaimers associated with using the 
-system. It reminds users that the tool is intended as a support system and should not replace professional medical judgment. This page also displays the system’s contact information. Users must accept the terms before they can proceed further into the application.
-
+Legal and ethical disclaimers are presented before system access. Users must accept terms before proceeding.
 
 ### Post-Login Dashboard
 ![Post Login Page](Screenshots%20Of%20Results%20and%20System%20Deployment/post_login_page.png)
 
-#### Post-Login Dashboard:
-Upon accepting the terms, the user is navigated to the Post-Login Page. This page acts as a central dashboard, offering three main options: upload a new scan for analysis, access patient records, or log out. The interface also displays a personalized welcome message based on the logged-in user’s credentials.
-
+Central dashboard with three options: upload a new scan, access patient records, or log out. Displays a personalised welcome message.
 
 ### Upload Scan Interface
 ![Upload Scan](Screenshots%20Of%20Results%20and%20System%20Deployment/upload_scan_page.png)
 
-#### Upload Scan Interface:
-There is a file input system for uploading CT scan images and it displays motivational health quotes to keep the interface engaging. After a user uploads an image and clicks the “Analyze” button, the system begins processing the image using the integrated ResNet50 model. A loader animation appears during this time to indicate progress.
+File input for CT scan upload. Shows a loader animation during model inference. Displays motivational health quotes to keep the interface engaging.
 
-
-### Analysis Result Interface
+### Analysis Result
 ![Analysis Result](Screenshots%20Of%20Results%20and%20System%20Deployment/Analysis_result.png)
 
-#### Analysis Result Interface:
-Once analysis is complete, the result is displayed in a dedicated Result Section. The result consists of a binary classification: either “Positive” or “Negative” and the Lung-RADS score, along with a confidence score indicating the model’s certainty. The result and a medical disclaimer appear within the same container to ensure users clearly understand that the tool supports, but does not replace, formal diagnosis.
-
+Displays binary classification result (Positive/Negative), Lung-RADS score, and confidence percentage. Medical disclaimer shown alongside result.
 
 ### Add Patient Records
 ![Add Records](Screenshots%20Of%20Results%20and%20System%20Deployment/Add_Records_page.png)
 
-#### Add Patient Records:
-After viewing the result, users have the option to Save, Print, Share, or Delete the scan result. Clicking “Save As” redirects the user to the Records Page, where a form allows them to input full patient data including demographics, scan result, passport photo, and medical history. Saving this form adds the entry to the records database.
-
+After viewing results, users can Save, Print, Share, or Delete. Saving redirects to a form for full patient data entry including demographics, scan result, passport photo, and medical history.
 
 ### Patient Records Table
 ![Patient Records](Screenshots%20Of%20Results%20and%20System%20Deployment/patients_record_page.png)
 
-#### Patient Records Table
-Saved records are then made accessible via the Patient Records Page. This page displays all saved patient data in a searchable, interactive table. Users can add new records, edit existing ones, delete records, or view them in detail. Each record entry supports selection through checkboxes and expandable rows.
-
+Searchable, interactive table of all saved patient records. Supports add, edit, delete, and detailed view per record.
 
 ### View Patient Record
 ![View Patient Record](Screenshots%20Of%20Results%20and%20System%20Deployment/view_patient_record.png)
 
-#### View Patient Record
-Selecting the “View” option on any record navigates to the View Record Page. This interface presents a detailed read-only view of the selected patient's data, scan result, medical notes, and other saved information in a clean, printable layout.
-
+Detailed read-only view of selected patient data, scan result, and medical notes in a clean printable layout.
 
 ### Printable Patient Result
 ![Print Patient Result](Screenshots%20Of%20Results%20and%20System%20Deployment/print_patient_result.png)
 
-#### Printable Patient Result
-If the user opts to print the analysis result directly after a scan, they are navigated to the Print Preview Page. This page shows the scan image alongside the result in a formatted layout prepared for hard copy documentation. A print button is included to trigger the browser’s print functionality.
+Print preview of the scan image alongside the result, formatted for hard copy documentation.
 
+---
 
-### Requirements
+## Requirements
 
-All required Python packages are listed in requirements.txt:
+```
+torch
+torchvision
+Pillow
+numpy
+scikit-learn
+matplotlib
+seaborn
+gdown
+flask
+flask-cors
+```
 
-torch, torchvision, Pillow, numpy, scikit-learn, matplotlib, seaborn, gdown
+Install with:
 
-Install with: pip install -r requirements.txt
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Limitations
+- Binary classification only (cancerous vs non-cancerous) — does not distinguish cancer subtypes
+- 2D image-based, not full 3D volumetric CT analysis
+- No explainability layer (Grad-CAM not yet integrated)
+- No clinical validation with expert radiologists
+- Dataset size relatively small compared to clinical-grade systems
+
+---
+
+## Future Work
+- Add Grad-CAM explainability for visual interpretation of model decisions
+- Extend to multi-class classification (cancer subtypes)
+- 3D or multi-view CNN for better spatial understanding
+- Expand dataset with larger, more diverse sources
+- Clinical validation with expert radiologist review
 
 ---
 
 ## Disclaimer
-This system is intended **strictly for research and educational purposes**.
-It is not a certified medical device and must not be used as a replacement
-for professional medical diagnosis, treatment, or clinical decision-making.
 
-All outputs generated by this system should be reviewed and interpreted by
-qualified healthcare professionals.
+This system is intended **strictly for research and educational purposes**. It is not a certified medical device and must not be used as a replacement for professional medical diagnosis, treatment, or clinical decision-making.
+
+All outputs generated by this system should be reviewed and interpreted by qualified healthcare professionals.
 
 ---
-## Future Work
-- Expansion of dataset size
-- Add explainability methods (e.g., Grad‑CAM)
-- Extend to 3D or multi‑view CNNs for better spatial understanding
-- Clinical validation with expert radiologists
 
-  ---
 ## Author
+
 **Angel Egwaoje**
+Machine Learning Engineer | Computer Vision & Medical Imaging
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/angel-egwaoje)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=flat-square&logo=github)](https://github.com/egwaojeangel)
 
 
 
